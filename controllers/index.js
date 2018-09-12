@@ -6,13 +6,7 @@ const twilioBot = twilioConfig.bot;
 const twilioController = twilioConfig.controller;
 
 const setupTwilio = () => {
-  twilioController.setupWebserver(process.env.WEBHOOK_PORT || 3000, (err, server) => {
-    server.get('/', (req, res) => {
-      res.send('Server is running');
-    });
-
-    twilioController.createWebhookEndpoints(server, twilioBot);
-  });
+  twilioController.createWebhookEndpoints(webConfig.server, twilioBot);
 
   twilioController.hears(['.*'], 'message_received', actions.sayHello(twilioController, 'Twilio'));
 };
